@@ -1,0 +1,38 @@
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+
+
+public class StepDefinitions {
+
+    private LocalDate birthdate;
+    public long calculatedAgeInDays;
+
+
+    @Given("a birthdate is entered as {string}")
+    public void the_user_provides_a_birthdate(String birthdateStr)  {
+        // Write code here that turns the phrase above into concrete actions
+        birthdate = LocalDate.parse(birthdateStr);
+    }
+
+
+    @When("the user calculates the age")
+    public void the_user_calculates_the_age() {
+        // Write code here that turns the phrase above into concrete actions
+        LocalDate today = LocalDate.now();
+        calculatedAgeInDays = ChronoUnit.DAYS.between(birthdate, today );
+
+    }
+    @Then("the age in days is calculated as {long}")
+    public void the_age_in_days_is_calculated_as(long expectedAgeInDays)  {
+        // Write code here that turns the phrase above into concrete actions
+        if (calculatedAgeInDays != expectedAgeInDays) {
+            throw new AssertionError("Expected age in days: " + expectedAgeInDays + ", but this is: " + calculatedAgeInDays);
+
+        }
+    }
+}
